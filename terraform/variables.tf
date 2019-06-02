@@ -1,4 +1,6 @@
-variable "region" {}
+variable "region" {
+  default = "us-west-2"
+}
 
 variable "acces_key" {
   default = "AKIA2GZLZETKPUZAO3R4"

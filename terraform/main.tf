@@ -51,29 +51,6 @@ resource "aws_instance" "web" {
   key_name        = "cka"
   tags            = "${var.tags}"
   security_groups = ["${aws_security_group.web.name}"]
-
-  provisioner "remote-exec" {
-    inline = [
-      "echo \"[Atualizando SO]\"",
-      "sudo yum update -y",
-      "echo \"[Instalando Docker]\"",
-      "sudo yum install -y docker",
-      "echo \"[Iniciando Servico Docker]\"",
-      "sudo service docker start",
-      "sudo systemctl enable docker",
-      "sudo usermod -a -G docker ec2-user",
-      "echo \"[Iniciando Container Apache]\"",
-      "sudo docker run -d -p 80:80 httpd",
-      "echo \"[Pronto]\"",
-    ]
-
-    connection {
-      type        = "${local.conn_type}"
-      user        = "${local.conn_user}"
-      timeout     = "${local.conn_timeout}"
-      private_key = "${local.conn_key}"
-    }
-  }
 }
 
 output "ip" {
